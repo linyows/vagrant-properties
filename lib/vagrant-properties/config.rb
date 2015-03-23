@@ -4,10 +4,10 @@ require 'yaml'
 module VagrantPlugins
   module Properties
     class Config < Vagrant.plugin('2', :config)
-      attr_accessor :properties
+      attr_writer :properties_path
 
-      def initialize
-        @properties = self.class.properties
+      def named(key)
+        self.class.properties[key.to_sym]
       end
 
       class << self
@@ -16,14 +16,20 @@ module VagrantPlugins
         end
 
         def build_properties
-          load_properties.each do |k, v|
-            v['path'] = pull_project(v['repo'])
-            write_to_hosts v['ip'], v['hostname']
+          load_properties.each_with_object({}) do |(name, property), memo|
+            property['path'] = pull_project(property['repo'])
+            write_to_hosts(property['ip'], property['hostname'])
+            keys = property.keys.inject([]) { |m, k| m << k.to_sym }
+            memo[name.to_sym] = Struct.new(*keys).new(*property.values)
           end
         end
 
+        def properties_path
+          @properties_path ||= 'vagrant_properties.yml'
+        end
+
         def load_properties
-          YAML.load_file('vagrant_properties.yml')
+          YAML.load_file properties_path
         end
 
         def pull_project(repo)
