@@ -7,7 +7,7 @@ module VagrantPlugins
       attr_accessor :properties
 
       def initialize
-        @properties = self.class.properties
+        @properties = self.class.properties if VagrantProperties.enabled?
       end
 
       class << self
