@@ -1,7 +1,7 @@
 require 'vagrant-properties/version'
 
 module VagrantPlugins
-  module Property
+  module Kernel_V2
     class Plugin < Vagrant.plugin('2')
       config('properties') do
         require File.expand_path('../vagrant-properties/config', __FILE__)
