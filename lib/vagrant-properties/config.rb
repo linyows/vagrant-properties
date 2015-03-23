@@ -2,12 +2,12 @@ require 'vagrant'
 require 'yaml'
 
 module VagrantPlugins
-  module Property
+  module Properties
     class Config < Vagrant.plugin('2', :config)
       attr_accessor :properties
 
       def initialize
-        @properties = self.class.properties if VagrantProperties.enabled?
+        @properties = self.class.properties
       end
 
       class << self

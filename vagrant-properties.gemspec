@@ -5,7 +5,7 @@ require 'vagrant-properties/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "vagrant-properties"
-  spec.version       = Vagrant::Properties::VERSION
+  spec.version       = VagrantPlugins::Properties::VERSION
   spec.authors       = ["linyows"]
   spec.email         = ["linyows@gmail.com"]
   spec.summary       = %q{Mnagement multiple machines.}
