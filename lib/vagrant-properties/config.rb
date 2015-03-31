@@ -60,7 +60,7 @@ module VagrantPlugins
         end
 
         def git_clone(path, repo)
-          `test ! -d #{path} && git clone #{value['repo']} #{path}`
+          `test ! -d #{path} && git clone #{repo} #{path}`
         end
 
         def ghq?
