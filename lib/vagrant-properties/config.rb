@@ -48,7 +48,7 @@ module VagrantPlugins
 
         def write_to_hosts(ip, hostname)
           `test 0 -ne $(cat /etc/hosts | grep -q #{ip} ; echo $?) && \
-            echo "#{ip} #{hostname}" | tee -a /etc/hosts`
+            echo "#{ip} #{hostname}" | sudo tee -a /etc/hosts`
         end
 
         def path_matcher
