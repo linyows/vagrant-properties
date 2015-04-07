@@ -17,11 +17,12 @@ module VagrantPlugins
 
         def build_properties
           load_properties.each_with_object({}) do |(name, property), memo|
-            unless property['repo'].empty?
+            if property['repo'] && !property['repo'].empty?
               property['path'] = pull_project(property['repo'])
             end
 
-            if !property['ip'].empty? && !property['hostname'].empty?
+            if property['ip'] && property['hostname'] &&
+                !property['ip'].empty? && !property['hostname'].empty?
               write_to_hosts(property['ip'], property['hostname'])
             end
 
