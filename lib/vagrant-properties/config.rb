@@ -17,8 +17,14 @@ module VagrantPlugins
 
         def build_properties
           load_properties.each_with_object({}) do |(name, property), memo|
-            property['path'] = pull_project(property['repo'])
-            write_to_hosts(property['ip'], property['hostname'])
+            unless property['repo'].empty?
+              property['path'] = pull_project(property['repo'])
+            end
+
+            if !property['ip'].empty? && !property['hostname'].empty?
+              write_to_hosts(property['ip'], property['hostname'])
+            end
+
             keys = property.keys.inject([]) { |m, k| m << k.to_sym }
             memo[name.to_sym] = Struct.new(*keys).new(*property.values)
           end
