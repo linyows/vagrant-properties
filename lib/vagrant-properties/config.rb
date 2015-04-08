@@ -43,7 +43,13 @@ module VagrantPlugins
           matched = repo.match(path_matcher)
 
           if ghq?
-            path = "#{`ghq root`.chop}/#{matched[1..3].join('/')}"
+            ghq_root = `ghq root`.chomp
+
+            if ghq_root == "No help topic for 'root'"
+              raise StandardError.new '"ghq root" not found. please update ghq'
+            end
+
+            path = "#{ghq_root}/#{matched[1..3].join('/')}"
             ghq_get path, repo
           else
             path = "../#{matched[3]}"
