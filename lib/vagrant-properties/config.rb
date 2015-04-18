@@ -16,7 +16,7 @@ module VagrantPlugins
         end
 
         def repo_valide?(repo)
-          repo && repo.is_a?(Array) && !repo.empty?
+          repo && repo.is_a?(String) && !repo.empty?
         end
 
         def domains_valid?(domains)
@@ -27,7 +27,7 @@ module VagrantPlugins
           hostname && hostname.is_a?(String) && !hostname.empty?
         end
 
-        def ip_valid?(hostname)
+        def ip_valid?(ip)
           ip && ip.is_a?(String) && !ip.empty?
         end
 
