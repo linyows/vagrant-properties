@@ -15,15 +15,34 @@ module VagrantPlugins
           @properties ||= build_properties
         end
 
+        def repo_valide?(repo)
+          repo && repo.is_a?(Array) && !repo.empty?
+        end
+
+        def domains_valid?(domains)
+          domains && domains.is_a?(Array) && !domains.empty?
+        end
+
+        def hostname_valid?(hostname)
+          hostname && hostname.is_a?(String) && !hostname.empty?
+        end
+
+        def ip_valid?(hostname)
+          ip && ip.is_a?(String) && !ip.empty?
+        end
+
         def build_properties
           load_properties.each_with_object({}) do |(name, property), memo|
-            if property['repo'] && !property['repo'].empty?
+            if repo_valide?(property['repo'])
               property['path'] = pull_project(property['repo'])
             end
 
-            if property['ip'] && property['hostname'] &&
-                !property['ip'].empty? && !property['hostname'].empty?
-              write_to_hosts(property['ip'], property['hostname'])
+            if !domains_valid?(property['domains']) && hostname_valid?(property['hostname'])
+              property['domains'] = [property['hostname']]
+            end
+
+            if ip_valid?(property['ip']) && domains_valid?(property['domains'])
+              write_to_hosts(property['ip'], property['domains'])
             end
 
             keys = property.keys.inject([]) { |m, k| m << k.to_sym }
@@ -59,9 +78,9 @@ module VagrantPlugins
           path
         end
 
-        def write_to_hosts(ip, hostname)
+        def write_to_hosts(ip, domains)
           `test 0 -ne $(cat /etc/hosts | grep -q #{ip} ; echo $?) && \
-            echo "#{ip} #{hostname}" | sudo tee -a /etc/hosts`
+            echo "#{ip} #{domains.join(' ')}" | sudo tee -a /etc/hosts`
         end
 
         def path_matcher
