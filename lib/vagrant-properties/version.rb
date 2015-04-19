@@ -1,5 +1,3 @@
-module VagrantPlugins
-  module Properties
-    VERSION = '0.5.1'
-  end
+module VagrantProperties
+  VERSION = '0.5.2'
 end
