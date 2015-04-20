@@ -83,7 +83,7 @@ module VagrantProperties
       end
 
       def path_matcher
-        %r|([\w\-\.]*)[:/]([\w\-]*)/([\w\-]*)\.git|
+        %r|([\w\-\.]*)[:/]([\w\-]*)/([\w\-\.]*)\.git|
       end
 
       def ghq_get(path, repo)
