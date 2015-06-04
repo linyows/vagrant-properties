@@ -44,6 +44,10 @@ module VagrantProperties
             write_to_hosts(property['ip'], property['domains'])
           end
 
+          if ip_valid?(property['vip']) && domains_valid?([property['vip_domain']])
+            write_to_hosts(property['vip'], [property['vip_domain']])
+          end
+
           keys = property.keys.inject([]) { |m, k| m << k.to_sym }
           memo[name.to_sym] = Struct.new(*keys).new(*property.values)
         end
