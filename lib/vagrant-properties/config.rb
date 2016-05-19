@@ -95,7 +95,7 @@ module VagrantProperties
       end
 
       def git_clone(path, repo)
-        `test ! -d #{path} && git clone #{repo} #{path}`
+        `test ! -d #{path} && git clone --recursive #{repo} #{path}`
       end
 
       def ghq?
