@@ -23,7 +23,20 @@ Or install it yourself as:
 Usage
 -----
 
-TODO: Write usage instructions here
+Vagrantfile:
+
+```ruby
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+unless Vagrant.has_plugin?('vagrant-properties', '~> 0.8')
+  action = Vagrant.has_plugin?('vagrant-properties') ? 'update' : 'install'
+  Dir.chdir(Dir.home) { system "vagrant plugin #{action} vagrant-properties" }
+end
+
+Vagrant.configure('2') do |config|
+...
+```
 
 Contributing
 ------------
