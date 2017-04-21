@@ -29,7 +29,7 @@ Vagrantfile:
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-unless Vagrant.has_plugin?('vagrant-properties', '~> 0.8')
+unless Vagrant.has_plugin?('vagrant-properties', '~> 0.9')
   action = Vagrant.has_plugin?('vagrant-properties') ? 'update' : 'install'
   Dir.chdir(Dir.home) { system "vagrant plugin #{action} vagrant-properties" }
 end
