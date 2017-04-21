@@ -5,6 +5,10 @@ module VagrantProperties
   class Config < Vagrant.plugin('2', :config)
     attr_writer :properties_path
 
+    def to_hash
+      self.class.properties
+    end
+
     def named(key)
       self.class.properties[key.to_sym]
     end
